@@ -1,9 +1,9 @@
 package marrit.marritleenstra_pset5;
 
-import java.util.List;
 
 /**
  * Created by Marrit on 5-11-2017.
+ * Class that holds all the information about a TO-DOList item.
  */
 
 public class ToDoList {
@@ -12,8 +12,9 @@ public class ToDoList {
     private int mID;
     private String mTitle;
 
-    // initiate empty instance of Class
-    public ToDoList() {
+    // initiate instance of class not yet in database
+    public ToDoList(String title) {
+        mTitle = title;
     }
 
     // initiate instance of class with given ID (already in database)
