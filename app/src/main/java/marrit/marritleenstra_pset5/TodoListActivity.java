@@ -31,6 +31,8 @@ public class TodoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
 
+        //TODO: pull right todolist out of intent
+
         // set up recyclerView
         mToDoRecyclerView = (RecyclerView) findViewById(R.id.todo_recycler_view);
         mToDoRecyclerView.setLayoutManager(new LinearLayoutManager(this));

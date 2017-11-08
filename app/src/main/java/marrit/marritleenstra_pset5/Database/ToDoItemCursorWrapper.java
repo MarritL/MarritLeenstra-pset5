@@ -6,6 +6,7 @@ import android.database.CursorWrapper;
 import marrit.marritleenstra_pset5.ToDoItem;
 
 
+
 /**
  * Created by Marrit on 18-10-2017.
  * A CursorWrapper to pull out data of the database.
@@ -30,3 +31,4 @@ public class ToDoItemCursorWrapper extends CursorWrapper {
         return toDoItem;
     }
 }
+
