@@ -11,6 +11,7 @@ public class ToDoItem {
     private int mId;
     private String mTitle;
     private Boolean mCompleted;
+    private int mIdList;
 
     // initiate instance of Class always not completed
     ToDoItem() {
@@ -41,5 +42,13 @@ public class ToDoItem {
 
     public void setCompleted(Boolean completed) {
         mCompleted = completed;
+    }
+
+    public int getIdList() {
+        return mIdList;
+    }
+
+    public void setIdList(int idList) {
+        mIdList = idList;
     }
 }

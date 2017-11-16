@@ -43,6 +43,7 @@ class ToDoManager {
         ContentValues values = getContentValues(toDo);
 
         mDatabase.insert(ToDoTable.TABLE_TODOS, null, values);
+        System.out.println("values = " + values);
     }
 
     // add a row to the ListsTable
@@ -59,6 +60,8 @@ class ToDoManager {
         mDatabase.delete(ToDoTable.TABLE_TODOS, ToDoTable.Cols_todos._id + " = ?",
                 new String[] { idString });
 
+
+
     }
 
     // delete a row from the Lists table
@@ -67,13 +70,20 @@ class ToDoManager {
 
         mDatabase.delete(ToDoTable.TABLE_LISTS, ToDoTable.Cols_lists._id + " = ?",
                 new String[] { idString });
+
+        System.out.println("in delete list, idstring = " + idString);
     }
 
     // read the ToDoItems from the database and put in list
-    List<ToDoItem> getToDoItems() {
+    List<ToDoItem> getToDoItems(Integer ListId) {
+        //String mId = String.valueOf(ListId);
         List<ToDoItem> toDoItems = new ArrayList<>();
 
-        ToDoItemCursorWrapper cursor = queryToDoItems(null, null);
+        String id = String.valueOf(ListId);
+        String[] whereArgs = {id};
+
+        ToDoItemCursorWrapper cursor = queryToDoItems(ToDoTable.Cols_todos.id_list + " = ?", whereArgs);
+
 
         try {
             cursor.moveToFirst();
@@ -85,6 +95,7 @@ class ToDoManager {
             cursor.close();
         }
 
+        System.out.println("length list= " + toDoItems.size());
         return toDoItems;
     }
 
@@ -142,6 +153,7 @@ class ToDoManager {
     private static ContentValues getContentValues(ToDoItem toDo) {
         ContentValues values = new ContentValues();
         values.put(ToDoTable.Cols_todos.TITLE, toDo.getTitle());
+        values.put(ToDoTable.Cols_todos.id_list, toDo.getIdList());
         values.put(ToDoTable.Cols_todos.COMPLETED, toDo.getCompleted() ? 1: 0);
 
         return values;
@@ -166,6 +178,7 @@ class ToDoManager {
                 null, // having
                 null // orderBy
         );
+        System.out.println("queryToDoItems" + whereClause + whereArgs[0]);
         return new ToDoItemCursorWrapper(cursor);
     }
 

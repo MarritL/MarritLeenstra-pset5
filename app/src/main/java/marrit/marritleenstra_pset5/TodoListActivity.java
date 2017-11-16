@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class TodoListActivity extends AppCompatActivity {
     private RecyclerView mToDoRecyclerView;
     private ToDoAdapter mAdapter;
     private List<ToDoItem> toDoItems;
+    private Integer mIdList;
 
 
     @Override
@@ -32,6 +34,8 @@ public class TodoListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_todo_list);
 
         //TODO: pull right todolist out of intent
+        mIdList = getIntent().getIntExtra("Extra_ListID", 0);
+        System.out.println("AFTER getIntent " + mIdList);
 
         // set up recyclerView
         mToDoRecyclerView = (RecyclerView) findViewById(R.id.todo_recycler_view);
@@ -148,7 +152,10 @@ public class TodoListActivity extends AppCompatActivity {
                     // make To-Do item
                     ToDoItem toDoItem = new ToDoItem();
                     toDoItem.setTitle(mTitle.getText().toString());
+                    toDoItem.setIdList(mIdList);
+                    System.out.println("in Onclick, list number = " + mIdList);
                     ToDoManager.getInstance(TodoListActivity.this).addToDo(toDoItem);
+
 
                     // display To-Do item
                     updateUI();
@@ -168,7 +175,7 @@ public class TodoListActivity extends AppCompatActivity {
     // update recyclerView
     private void updateUI() {
         ToDoManager toDoManager = ToDoManager.getInstance(this);
-        toDoItems = toDoManager.getToDoItems();
+        toDoItems = toDoManager.getToDoItems(mIdList);
 
         if (mAdapter == null) {
             mAdapter = new ToDoAdapter(toDoItems);
@@ -184,7 +191,7 @@ public class TodoListActivity extends AppCompatActivity {
     private void ItemTouchHelper() {
 
         ToDoManager toDoManager = ToDoManager.getInstance(this);
-        toDoItems = toDoManager.getToDoItems();
+        toDoItems = toDoManager.getToDoItems(mIdList);
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
