@@ -179,7 +179,7 @@ public class ManyListsActivity extends AppCompatActivity {
 
 
     // cancel listener for dialog box
-    private class CancelListener implements DialogInterface.OnClickListener {
+    public class CancelListener implements DialogInterface.OnClickListener {
 
         @Override
         public void onClick(DialogInterface dialog, int whichButton) {

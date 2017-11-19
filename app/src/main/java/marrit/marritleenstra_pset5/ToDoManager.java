@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import marrit.marritleenstra_pset5.Database.ToDoDBSchema;
 import marrit.marritleenstra_pset5.Database.ToDoDBSchema.ToDoTable;
 import marrit.marritleenstra_pset5.Database.ToDoItemCursorWrapper;
 import marrit.marritleenstra_pset5.Database.DatabaseHelper;
@@ -81,8 +82,17 @@ class ToDoManager {
 
         String id = String.valueOf(ListId);
         String[] whereArgs = {id};
+        //String whereclause = ToDoTable.Cols_todos.id_list + " = ?";
+        //String whereclause = "\"idList=?\"";
+        String whereclause = "idList=" + ListId;
 
-        ToDoItemCursorWrapper cursor = queryToDoItems(ToDoTable.Cols_todos.id_list + " = ?", whereArgs);
+        //ToDoItemCursorWrapper cursor = queryToDoItems(ToDoTable.Cols_todos.id_list + " = ?", whereArgs);
+        //ToDoItemCursorWrapper cursor = queryToDoItems(null, null);
+        //ToDoItemCursorWrapper cursor = queryToDoItems(whereclause, whereArgs);
+        ToDoItemCursorWrapper cursor = queryToDoItems(whereclause, null);
+        //ToDoItemCursorWrapper cursor = queryToDoItems()
+        //ToDoItemCursorWrapper cursor = queryToDoItems("idList=?", new String[] {id});
+        //ToDoItemCursorWrapper cursor = queryToDoItems(null, whereArgs);
 
 
         try {
@@ -173,12 +183,14 @@ class ToDoManager {
                 ToDoTable.TABLE_TODOS,
                 null, // select all columns
                 whereClause,
+                //"idList=2" , null,
+                //"idList=?",
                 whereArgs,
                 null, // group by
                 null, // having
                 null // orderBy
         );
-        System.out.println("queryToDoItems" + whereClause + whereArgs[0]);
+        //System.out.println("queryToDoItems: " + whereClause + " " + whereArgs[0]);
         return new ToDoItemCursorWrapper(cursor);
     }
 

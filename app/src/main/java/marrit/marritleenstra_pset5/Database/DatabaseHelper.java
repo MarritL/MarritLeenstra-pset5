@@ -46,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ToDoDBSchema.ToDoTable.Cols_todos._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ToDoTable.Cols_todos.TITLE + ", " +
                 ToDoTable.Cols_todos.COMPLETED + ", " +
-                ToDoTable.Cols_todos.id_list + ")"
+                ToDoTable.Cols_todos.id_list + " INTEGER" + ")"
         );
 
         // create table lists

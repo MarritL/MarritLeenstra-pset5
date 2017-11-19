@@ -1,7 +1,10 @@
 package marrit.marritleenstra_pset5;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +36,7 @@ public class TodoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
 
-        //TODO: pull right todolist out of intent
+        // pull right todolist out of intent
         mIdList = getIntent().getIntExtra("Extra_ListID", 0);
         System.out.println("AFTER getIntent " + mIdList);
 
@@ -54,7 +57,7 @@ public class TodoListActivity extends AppCompatActivity {
 
 
     // ViewHolder for the recyclerView
-    private class ToDoHolder extends RecyclerView.ViewHolder {
+    private class ToDoHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         private TextView mTitleTextView;
         private ToDoItem mToDoItem;
         private CheckBox mCBToDoItem;
@@ -99,6 +102,21 @@ public class TodoListActivity extends AppCompatActivity {
                     mTitleTextView.setPaintFlags(0);
                 }
             }
+        }
+
+        // on long click listener to edit existing ToDos
+        @Override
+        public boolean onLongClick(View view) {
+
+            Intent intent;
+            intent = new Intent(view.getContext(), TodoActivity.class);
+            intent.putExtra("Extra_TODOID", mToDoItem.getId());
+
+            view.getContext().startActivity(intent);
+
+
+
+            return true;
         }
     }
 
@@ -170,6 +188,7 @@ public class TodoListActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
     // update recyclerView
