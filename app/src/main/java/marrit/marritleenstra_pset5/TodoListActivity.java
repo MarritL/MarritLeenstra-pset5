@@ -114,8 +114,6 @@ public class TodoListActivity extends AppCompatActivity {
 
             view.getContext().startActivity(intent);
 
-
-
             return true;
         }
     }

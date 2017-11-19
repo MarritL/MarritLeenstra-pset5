@@ -1,5 +1,6 @@
 package marrit.marritleenstra_pset5;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +20,8 @@ public class TodoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
 
-        int mToDoId = getIntent().getIntExtra("Extra_TODOID", 0);
+        Intent intent = getIntent();
+        int mToDoId = intent.getIntExtra("Extra_TODOID", 0);
         mToDo = ToDoManager.getInstance(TodoActivity.this).getToDoItem(mToDoId);
 
         mTitle = (TextView) findViewById(R.id.the_title);
@@ -42,7 +44,12 @@ public class TodoActivity extends AppCompatActivity {
             // check if new title is filled in
             if (!mNEWTITLE.equals("")) {
                 mToDo.setTitle(mNEWTITLE);
-                // TODO change in Database
+
+                // change To-Do also in Database
+                ToDoManager.getInstance(TodoActivity.this).updateToDoItem(mToDo);
+
+                Intent intent = new Intent(view.getContext(), TodoListActivity.class);
+                intent.putExtra("Extra_ListID", mToDo.getIdList());
             }
 
         }
