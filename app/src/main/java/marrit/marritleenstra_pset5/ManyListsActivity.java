@@ -52,8 +52,7 @@ public class ManyListsActivity extends AppCompatActivity {
 
 
         // ViewHolder for the recyclerView
-        private class ListsHolder extends RecyclerView.ViewHolder
-        implements View.OnClickListener {
+        private class ListsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private TextView mListTitleTextView;
             private ToDoList mToDoListItem;
 

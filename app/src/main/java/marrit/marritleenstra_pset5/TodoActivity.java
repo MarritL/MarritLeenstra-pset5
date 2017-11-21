@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TodoActivity extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class TodoActivity extends AppCompatActivity {
     private class ButtonClickListener implements View.OnClickListener {
 
         @Override
-        public void OnClick(View view) {
+        public void onClick(View view) {
 
             String mNEWTITLE = mNewTitle.getText().toString();
 
@@ -50,6 +51,13 @@ public class TodoActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(view.getContext(), TodoListActivity.class);
                 intent.putExtra("Extra_ListID", mToDo.getIdList());
+
+                view.getContext().startActivity(intent);
+            }
+
+            else {
+                // if user gave no title, yell at him
+                Toast.makeText(TodoActivity.this, "Give a new title!", Toast.LENGTH_SHORT).show();
             }
 
         }

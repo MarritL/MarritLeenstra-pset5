@@ -44,6 +44,7 @@ public class TodoListActivity extends AppCompatActivity {
         mToDoRecyclerView = (RecyclerView) findViewById(R.id.todo_recycler_view);
         mToDoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         // display recyclerView
         updateUI();
 
@@ -57,7 +58,7 @@ public class TodoListActivity extends AppCompatActivity {
 
 
     // ViewHolder for the recyclerView
-    private class ToDoHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    private class ToDoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTitleTextView;
         private ToDoItem mToDoItem;
         private CheckBox mCBToDoItem;
@@ -65,9 +66,11 @@ public class TodoListActivity extends AppCompatActivity {
         // construct a viewHolder with the checkbox and textview
         ToDoHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_todo, parent, false));
+            itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.todo_title);
             mCBToDoItem = (CheckBox) itemView.findViewById(R.id.CB_item);
+            mCBToDoItem.setFocusable(false);
         }
 
         // bind the data to the viewHolder
@@ -88,6 +91,19 @@ public class TodoListActivity extends AppCompatActivity {
 
         }
 
+        // on long click listener to edit existing ToDos
+        @Override
+        public void onClick(View view) {
+
+            Intent intent;
+            intent = new Intent(view.getContext(), TodoActivity.class);
+            intent.putExtra("Extra_TODOID", mToDoItem.getId());
+
+            view.getContext().startActivity(intent);
+
+            //return true;
+        }
+
         // checkbox listener for the To-Dos
         class MyCheckBoxListener implements CompoundButton.OnCheckedChangeListener {
 
@@ -104,18 +120,7 @@ public class TodoListActivity extends AppCompatActivity {
             }
         }
 
-        // on long click listener to edit existing ToDos
-        @Override
-        public boolean onLongClick(View view) {
 
-            Intent intent;
-            intent = new Intent(view.getContext(), TodoActivity.class);
-            intent.putExtra("Extra_TODOID", mToDoItem.getId());
-
-            view.getContext().startActivity(intent);
-
-            return true;
-        }
     }
 
     // Adapter for the recyclerView
@@ -233,6 +238,15 @@ public class TodoListActivity extends AppCompatActivity {
         // attach this ability to the recyclerView
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(mToDoRecyclerView);
+    }
+
+    // on back pressed go always to ManyListActivity
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(TodoListActivity.this, ManyListsActivity.class);
+        startActivity(intent);
     }
 
 }
