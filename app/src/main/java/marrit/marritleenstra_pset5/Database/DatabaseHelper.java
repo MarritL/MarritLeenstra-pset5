@@ -54,6 +54,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ToDoTable.Cols._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ToDoTable.Cols.TITLE + ")"
         );
+
+        // add a first list to the database to explain usage
+        db.execSQL("INSERT INTO " + TABLE_LISTS +
+                "(TITLE) VALUES " +
+                "('Click here to check your first TODO list');"
+        );
+
+        // explain how to add more lists
+        db.execSQL("INSERT INTO " + TABLE_LISTS +
+                "(TITLE) VALUES " +
+                "('Click on plus sign to add new list');"
+        );
+
+        // explain how to delete lists
+        db.execSQL("INSERT INTO " + TABLE_LISTS +
+                "(TITLE) VALUES " +
+                "('Swipe to left to delete');"
+        );
+
+        // add three lines to the database' first list that explain the usage of the app
+        db.execSQL("INSERT INTO " + TABLE_TODOS +
+                "(TITLE, COMPLETED, idList) VALUES " +
+                "('Add TODO in box below', 0, 1);"
+        );
+
+        db.execSQL("INSERT INTO " + TABLE_TODOS +
+                "(TITLE, COMPLETED, idList) VALUES " +
+                "('Use the checkbox to mark as done', 0, 1);"
+        );
+
+        db.execSQL("INSERT INTO " + TABLE_TODOS +
+                "(TITLE, COMPLETED, idList) VALUES " +
+                "('Swipe to left to delete', 0, 1);"
+        );
     }
 
         // when new version of database is needed
