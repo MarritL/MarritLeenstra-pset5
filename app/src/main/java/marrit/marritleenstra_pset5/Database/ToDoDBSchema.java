@@ -15,16 +15,12 @@ public class ToDoDBSchema {
         public static final String TABLE_TODOS = "todos";
         public static final String TABLE_LISTS = "lists";
 
-        public static final class Cols_todos {
+        // column names
+        public static final class Cols {
             public static final String _id = "id";
             public static final String TITLE = "title";
             public static final String COMPLETED = "completed";
             public static final String id_list = "idList";
-        }
-
-        public static final class Cols_lists {
-            public static final String _id = "id";
-            public static final String TITLE = "title";
         }
     }
 }

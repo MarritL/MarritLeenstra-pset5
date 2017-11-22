@@ -2,9 +2,9 @@
     <string name="app_name">MarritLeenstra-pset5</string>
     <string name="add">Add</string>
     <string name="hint">TODO title</string>
-    <string name="add_list">Add new TODO list</string>
     <string name="list_name">List name</string>
     <string name="edit_todo">Edit TODO</string>
     <string name="todo_title">New title</string>
     <string name="OK">OK</string>
+    <string name="title">Title:  </string>
 </resources>

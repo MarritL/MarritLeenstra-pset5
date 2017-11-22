@@ -43,16 +43,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // create table ToDos
         db.execSQL("create table " + TABLE_TODOS + "(" +
-                ToDoDBSchema.ToDoTable.Cols_todos._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ToDoTable.Cols_todos.TITLE + ", " +
-                ToDoTable.Cols_todos.COMPLETED + ", " +
-                ToDoTable.Cols_todos.id_list + " INTEGER" + ")"
+                ToDoTable.Cols._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ToDoTable.Cols.TITLE + ", " +
+                ToDoTable.Cols.COMPLETED + ", " +
+                ToDoTable.Cols.id_list + " INTEGER" + ")"
         );
 
         // create table lists
         db.execSQL("create table " + TABLE_LISTS + "(" +
-                ToDoDBSchema.ToDoTable.Cols_lists._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ToDoTable.Cols_lists.TITLE + ")"
+                ToDoTable.Cols._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ToDoTable.Cols.TITLE + ")"
         );
     }
 

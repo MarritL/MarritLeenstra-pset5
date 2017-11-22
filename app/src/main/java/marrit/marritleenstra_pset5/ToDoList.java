@@ -13,7 +13,7 @@ public class ToDoList {
     private String mTitle;
 
     // initiate instance of class not yet in database
-    public ToDoList(String title) {
+    ToDoList(String title) {
         mTitle = title;
     }
 
@@ -23,7 +23,7 @@ public class ToDoList {
     }
 
     // getters
-    public int getID() {
+    int getID() {
         return mID;
     }
 

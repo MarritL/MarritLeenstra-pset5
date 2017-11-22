@@ -15,21 +15,24 @@ import marrit.marritleenstra_pset5.ToDoItem;
  */
 
 public class ToDoItemCursorWrapper extends CursorWrapper {
+
+    // constructor
     public ToDoItemCursorWrapper(Cursor cursor) {
         super(cursor);
     }
 
     public ToDoItem getToDoItem() {
-        String idString = getString(getColumnIndex(ToDoDBSchema.ToDoTable.Cols_todos._id));
-        String title = getString(getColumnIndex(ToDoDBSchema.ToDoTable.Cols_todos.TITLE));
-        int isCompleted = getInt(getColumnIndex(ToDoDBSchema.ToDoTable.Cols_todos.COMPLETED));
-        String idListString = getString(getColumnIndex(ToDoDBSchema.ToDoTable.Cols_todos.id_list));
+        // pull to-do out of database
+        String idString = getString(getColumnIndex(ToDoDBSchema.ToDoTable.Cols._id));
+        String title = getString(getColumnIndex(ToDoDBSchema.ToDoTable.Cols.TITLE));
+        int isCompleted = getInt(getColumnIndex(ToDoDBSchema.ToDoTable.Cols.COMPLETED));
+        String idListString = getString(getColumnIndex(ToDoDBSchema.ToDoTable.Cols.id_list));
 
+        // put the data in a ToDoItem
         ToDoItem toDoItem = new ToDoItem(Integer.valueOf(idString));
         toDoItem.setTitle(title);
         toDoItem.setCompleted(isCompleted != 0);
         toDoItem.setIdList(Integer.valueOf(idListString));
-        System.out.println("make new todo item, listnumber = " + toDoItem.getIdList());
 
         return toDoItem;
     }

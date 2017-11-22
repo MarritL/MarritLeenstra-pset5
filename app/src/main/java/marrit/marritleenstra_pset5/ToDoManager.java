@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import marrit.marritleenstra_pset5.Database.ToDoDBSchema;
 import marrit.marritleenstra_pset5.Database.ToDoDBSchema.ToDoTable;
 import marrit.marritleenstra_pset5.Database.ToDoItemCursorWrapper;
 import marrit.marritleenstra_pset5.Database.DatabaseHelper;
@@ -44,7 +43,6 @@ class ToDoManager {
         ContentValues values = getContentValues(toDo);
 
         mDatabase.insert(ToDoTable.TABLE_TODOS, null, values);
-        System.out.println("values = " + values);
     }
 
     // add a row to the ListsTable
@@ -58,10 +56,8 @@ class ToDoManager {
     void deleteToDo(ToDoItem toDo) {
         String idString = String.valueOf(toDo.getId());
 
-        mDatabase.delete(ToDoTable.TABLE_TODOS, ToDoTable.Cols_todos._id + " = ?",
+        mDatabase.delete(ToDoTable.TABLE_TODOS, ToDoTable.Cols._id + " = ?",
                 new String[] { idString });
-
-
 
     }
 
@@ -69,32 +65,20 @@ class ToDoManager {
     void deleteToDoList(ToDoList toDoList) {
         String idString = String.valueOf(toDoList.getID());
 
-        mDatabase.delete(ToDoTable.TABLE_LISTS, ToDoTable.Cols_lists._id + " = ?",
+        mDatabase.delete(ToDoTable.TABLE_LISTS, ToDoTable.Cols._id + " = ?",
                 new String[] { idString });
 
-        System.out.println("in delete list, idstring = " + idString);
     }
 
     // read the ToDoItems from the database and put in list
     List<ToDoItem> getToDoItems(Integer ListId) {
-        //String mId = String.valueOf(ListId);
+
         List<ToDoItem> toDoItems = new ArrayList<>();
 
-        String id = String.valueOf(ListId);
-        String[] whereArgs = {id};
-        //String whereclause = ToDoTable.Cols_todos.id_list + " = ?";
-        //String whereclause = "\"idList=?\"";
         String whereclause = "idList=" + ListId;
 
-        //ToDoItemCursorWrapper cursor = queryToDoItems(ToDoTable.Cols_todos.id_list + " = ?", whereArgs);
-        //ToDoItemCursorWrapper cursor = queryToDoItems(null, null);
-        //ToDoItemCursorWrapper cursor = queryToDoItems(whereclause, whereArgs);
+
         ToDoItemCursorWrapper cursor = queryToDoItems(whereclause, null);
-        //ToDoItemCursorWrapper cursor = queryToDoItems()
-        //ToDoItemCursorWrapper cursor = queryToDoItems("idList=?", new String[] {id});
-        //ToDoItemCursorWrapper cursor = queryToDoItems(null, whereArgs);
-
-
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -105,7 +89,6 @@ class ToDoManager {
             cursor.close();
         }
 
-        System.out.println("length list= " + toDoItems.size());
         return toDoItems;
     }
 
@@ -113,7 +96,7 @@ class ToDoManager {
     List<ToDoList> getToDoListItems() {
         List<ToDoList> toDoLists = new ArrayList<>();
 
-        ToDoListCursorWrapper cursor = queryToDoLists(null, null);
+        ToDoListCursorWrapper cursor = queryToDoLists();
 
         try {
             cursor.moveToFirst();
@@ -129,10 +112,10 @@ class ToDoManager {
     }
 
     // getInstance one to do item
-    public ToDoItem getToDoItem(int id) {
+    ToDoItem getToDoItem(int id) {
 
         ToDoItemCursorWrapper cursor = queryToDoItems(
-                ToDoTable.Cols_todos._id + " = ?",
+                ToDoTable.Cols._id + " = ?",
                 new String[] {String.valueOf(id) }
         );
 
@@ -154,7 +137,7 @@ class ToDoManager {
         ContentValues values = getContentValues(toDo);
 
         mDatabase.update(ToDoTable.TABLE_TODOS, values,
-                ToDoTable.Cols_todos._id + " = ?",
+                ToDoTable.Cols._id + " = ?",
                 new String[] { idString });
 
     }
@@ -162,9 +145,9 @@ class ToDoManager {
     // create a ContentValues for a to-do item
     private static ContentValues getContentValues(ToDoItem toDo) {
         ContentValues values = new ContentValues();
-        values.put(ToDoTable.Cols_todos.TITLE, toDo.getTitle());
-        values.put(ToDoTable.Cols_todos.id_list, toDo.getIdList());
-        values.put(ToDoTable.Cols_todos.COMPLETED, toDo.getCompleted() ? 1: 0);
+        values.put(ToDoTable.Cols.TITLE, toDo.getTitle());
+        values.put(ToDoTable.Cols.id_list, toDo.getIdList());
+        values.put(ToDoTable.Cols.COMPLETED, toDo.getCompleted() ? 1: 0);
 
         return values;
     }
@@ -172,7 +155,7 @@ class ToDoManager {
     // create a ContentValues for a to-do list item
     private static ContentValues getListContentValues(ToDoList toDoList) {
         ContentValues values = new ContentValues();
-        values.put(ToDoTable.Cols_lists.TITLE, toDoList.getTitle());
+        values.put(ToDoTable.Cols.TITLE, toDoList.getTitle());
 
         return values;
     }
@@ -183,24 +166,22 @@ class ToDoManager {
                 ToDoTable.TABLE_TODOS,
                 null, // select all columns
                 whereClause,
-                //"idList=2" , null,
-                //"idList=?",
                 whereArgs,
                 null, // group by
                 null, // having
                 null // orderBy
         );
-        //System.out.println("queryToDoItems: " + whereClause + " " + whereArgs[0]);
+
         return new ToDoItemCursorWrapper(cursor);
     }
 
     // query database lists table
-    private static ToDoListCursorWrapper queryToDoLists(String whereClause, String[] whereArgs) {
+    private static ToDoListCursorWrapper queryToDoLists() {
         Cursor cursor = mDatabase.query(
                 ToDoTable.TABLE_LISTS,
                 null, // select all columns
-                whereClause,
-                whereArgs,
+                null, // whereClause,
+                null, // whereArgs
                 null, // group by
                 null, // having
                 null // orderBy

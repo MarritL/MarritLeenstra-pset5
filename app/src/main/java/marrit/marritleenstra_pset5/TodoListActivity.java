@@ -1,15 +1,12 @@
 package marrit.marritleenstra_pset5;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,12 +35,10 @@ public class TodoListActivity extends AppCompatActivity {
 
         // pull right todolist out of intent
         mIdList = getIntent().getIntExtra("Extra_ListID", 0);
-        System.out.println("AFTER getIntent " + mIdList);
 
         // set up recyclerView
         mToDoRecyclerView = (RecyclerView) findViewById(R.id.todo_recycler_view);
         mToDoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
         // display recyclerView
         updateUI();
@@ -88,10 +83,9 @@ public class TodoListActivity extends AppCompatActivity {
 
             // listen for a change in completed
             mCBToDoItem.setOnCheckedChangeListener(new MyCheckBoxListener());
-
         }
 
-        // on long click listener to edit existing ToDos
+        // on click listener to edit existing ToDos in TodoActivity
         @Override
         public void onClick(View view) {
 
@@ -101,7 +95,6 @@ public class TodoListActivity extends AppCompatActivity {
 
             view.getContext().startActivity(intent);
 
-            //return true;
         }
 
         // checkbox listener for the To-Dos
@@ -124,7 +117,7 @@ public class TodoListActivity extends AppCompatActivity {
     }
 
     // Adapter for the recyclerView
-    class ToDoAdapter extends RecyclerView.Adapter<ToDoHolder> {
+    private class ToDoAdapter extends RecyclerView.Adapter<ToDoHolder> {
         private List<ToDoItem> mToDoItems;
 
         ToDoAdapter(List<ToDoItem> todoItems) {
@@ -174,9 +167,7 @@ public class TodoListActivity extends AppCompatActivity {
                     ToDoItem toDoItem = new ToDoItem();
                     toDoItem.setTitle(mTitle.getText().toString());
                     toDoItem.setIdList(mIdList);
-                    System.out.println("in Onclick, list number = " + mIdList);
                     ToDoManager.getInstance(TodoListActivity.this).addToDo(toDoItem);
-
 
                     // display To-Do item
                     updateUI();
@@ -248,5 +239,4 @@ public class TodoListActivity extends AppCompatActivity {
         Intent intent = new Intent(TodoListActivity.this, ManyListsActivity.class);
         startActivity(intent);
     }
-
 }

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:paddingLeft="16dp"
+    android:paddingStart="16dp"
     android:paddingTop="16dp"
     android:orientation="vertical">
 
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:text="@string/edit_todo"/>
 
     <TextView
@@ -21,14 +21,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text = "Title:  "/>
+        android:text = "@string/title"/>
 
     <TextView
         android:id="@+id/the_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/edit_todo_title"
-        android:layout_toRightOf="@id/edit_todo_title"/>
+        android:layout_toEndOf="@id/edit_todo_title"/>
 
     <EditText
         android:id="@+id/ET_change_title"

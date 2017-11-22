@@ -2,7 +2,6 @@ package marrit.marritleenstra_pset5;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +12,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +24,6 @@ public class ManyListsActivity extends AppCompatActivity {
     private RecyclerView mListsRecyclerView;
     private ToDoListAdapter mListsAdapter;
     private List<ToDoList> toDoListItems;
-    //EditText mAddList = (EditText) findViewById(R.id.EditText_add_list);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +45,6 @@ public class ManyListsActivity extends AppCompatActivity {
             mFloatingButtonAdd.setOnClickListener(new AddListClickListener());
         }
 
-
         // ViewHolder for the recyclerView
         private class ListsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private TextView mListTitleTextView;
@@ -68,9 +62,9 @@ public class ManyListsActivity extends AppCompatActivity {
             void bind(ToDoList toDoList) {
                 mToDoListItem = toDoList;
                 mListTitleTextView.setText(mToDoListItem.getTitle());
-
             }
 
+            // set on click listener on the items of the list
             @Override
             public void onClick(View view) {
 
@@ -84,7 +78,7 @@ public class ManyListsActivity extends AppCompatActivity {
         }
 
     // Adapter for the recyclerView
-    class ToDoListAdapter extends RecyclerView.Adapter<ListsHolder> {
+    private class ToDoListAdapter extends RecyclerView.Adapter<ListsHolder> {
         private List<ToDoList> mToDoListItems;
 
         ToDoListAdapter(List<ToDoList> todoListItems) {
@@ -118,7 +112,7 @@ public class ManyListsActivity extends AppCompatActivity {
         }
     }
 
-        // listener to add new To-Do
+        // listener to add new ToDoList
         private class AddListClickListener implements View.OnClickListener {
 
             @Override
@@ -127,21 +121,25 @@ public class ManyListsActivity extends AppCompatActivity {
                 // just to be sure
                 if (view == findViewById(R.id.floatingActionButton)) {
 
+                    // function in which the action takes place
                     showAddListDialog();
                 }
             }
         }
 
+        // show a dialog which allows user to add a new todolist
         private void showAddListDialog() {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             LayoutInflater inflater = this.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.dialog_add_list, null);
+            View dialogView = inflater.inflate(R.layout.dialog_add_list,null);
             dialogBuilder.setView(dialogView);
 
             final EditText mAddList = (EditText) dialogView.findViewById(R.id.EditText_add_list);
 
+            // Let the user know what the dialog is for
             dialogBuilder.setMessage("Add new TODO list");
-            //dialogBuilder.setPositiveButton("Add", new AddListener());
+
+            // OK-button
             dialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -169,8 +167,10 @@ public class ManyListsActivity extends AppCompatActivity {
 
             });
 
+            // cancel button
             dialogBuilder.setNegativeButton("Cancel", new CancelListener());
 
+            // when the building is done show the dialog in the app screen
             AlertDialog addList = dialogBuilder.create();
             addList.show();
         }
@@ -178,16 +178,13 @@ public class ManyListsActivity extends AppCompatActivity {
 
 
     // cancel listener for dialog box
-    public class CancelListener implements DialogInterface.OnClickListener {
+    private class CancelListener implements DialogInterface.OnClickListener {
 
         @Override
         public void onClick(DialogInterface dialog, int whichButton) {
-            // do nothing
+            // do nothing and go back
         }
     }
-
-
-
 
 
     // update recyclerView

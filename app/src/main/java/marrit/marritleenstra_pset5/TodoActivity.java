@@ -11,27 +11,28 @@ import android.widget.Toast;
 
 public class TodoActivity extends AppCompatActivity {
 
+    // add variables
     private ToDoItem mToDo;
-    private TextView mTitle;
     private EditText mNewTitle;
-    private Button mButtonOK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
 
+        // display the right todoItem
         Intent intent = getIntent();
         int mToDoId = intent.getIntExtra("Extra_TODOID", 0);
         mToDo = ToDoManager.getInstance(TodoActivity.this).getToDoItem(mToDoId);
 
-        mTitle = (TextView) findViewById(R.id.the_title);
-        mTitle.setText(mToDo.getTitle());
+        TextView title = (TextView) findViewById(R.id.the_title);
+        title.setText(mToDo.getTitle());
 
         mNewTitle = (EditText) findViewById(R.id.ET_change_title);
-        mButtonOK = (Button) findViewById(R.id.Button_OK_title);
-        mButtonOK.setOnClickListener(new ButtonClickListener());
 
+        // initialise OK button and enable clicks on OK button
+        Button buttonOK = (Button) findViewById(R.id.Button_OK_title);
+        buttonOK.setOnClickListener(new ButtonClickListener());
     }
 
 
@@ -40,18 +41,18 @@ public class TodoActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
-            String mNEWTITLE = mNewTitle.getText().toString();
+            String mNewName = mNewTitle.getText().toString();
 
             // check if new title is filled in
-            if (!mNEWTITLE.equals("")) {
-                mToDo.setTitle(mNEWTITLE);
+            if (!mNewName.equals("")) {
+                mToDo.setTitle(mNewName);
 
                 // change To-Do also in Database
                 ToDoManager.getInstance(TodoActivity.this).updateToDoItem(mToDo);
 
+                // get back to the todoList
                 Intent intent = new Intent(view.getContext(), TodoListActivity.class);
                 intent.putExtra("Extra_ListID", mToDo.getIdList());
-
                 view.getContext().startActivity(intent);
             }
 
@@ -59,8 +60,6 @@ public class TodoActivity extends AppCompatActivity {
                 // if user gave no title, yell at him
                 Toast.makeText(TodoActivity.this, "Give a new title!", Toast.LENGTH_SHORT).show();
             }
-
         }
-
     }
 }
